@@ -4,6 +4,8 @@
 const int pinoServo = 6; //PINO DIGITAL UTILIZADO PELO SERVO  
 const int echoPin = 7;
 const int trigPin = 5;
+const int ledVermelho = 3;
+const int ledVerde = 2;
 
 Ultrasonic ultrasonic(trigPin, echoPin);
 Servo s; //OBJETO DO TIPO SERVO
@@ -19,7 +21,7 @@ void setup (){
   Serial.begin(9600);
 }
   //MÉTODO RESPONSÁVEL POR CALCULAR A DISTÂNCIA
-void hcsr04(){
+void hcsr04() {
     digitalWrite(trigPin, LOW); //SETA O PINO 5 COM UM PULSO BAIXO "LOW"
     delayMicroseconds(2); //INTERVALO DE 2 MICROSSEGUNDOS
     digitalWrite(trigPin, HIGH); //SETA O PINO 5 COM PULSO ALTO "HIGH"
@@ -31,14 +33,10 @@ void hcsr04(){
     distancia = (ultrasonic.Ranging(CM)); //VARIÁVEL GLOBAL RECEBE O VALOR DA DISTÂNCIA MEDIDA
     result = String(distancia); //VARIÁVEL GLOBAL DO TIPO STRING RECEBE A DISTÂNCIA(CONVERTIDO DE INTEIRO PARA STRING)
     delay(500); //INTERVALO DE 500 MILISSEGUNDOS
- }
+}
 
-void loop(){
-  hcsr04(); // FAZ A CHAMADA DO MÉTODO "hcsr04()"
-  Serial.print("Distancia "); //IMPRIME O TEXTO NO MONITOR SERIAL
-  Serial.print(result); ////IMPRIME NO MONITOR SERIAL A DISTÂNCIA MEDIDA
-  Serial.println("cm"); //IMPRIME O TEXTO NO MONITOR SERIAL
-  
+void controle() {
+
   for(pos = 0; pos < 80; pos++){ 
     s.write(pos); 
     delay(3); //valor de 3 milisegundos foi o suficiente para a garrafa de saida maior
@@ -48,6 +46,26 @@ void loop(){
     s.write(pos); 
     delay(3); //valor de 3 segundos foi o suficiente para a garrafa de saida maior
   }
+  
+}
 
+void loop() {
+  hcsr04(); // FAZ A CHAMADA DO MÉTODO "hcsr04()"
+  //Serial.print("Distancia "); //IMPRIME O TEXTO NO MONITOR SERIAL
+  //Serial.print(result); //IMPRIME NO MONITOR SERIAL A DISTÂNCIA MEDIDA
+  //Serial.println("cm"); //IMPRIME O TEXTO NO MONITOR SERIAL
+  Serial.println(distancia);
+ 
+  if (distancia == 5){
+    digitalWrite(ledVermelho, LOW);
+    digitalWrite(ledVerde, HIGH);
+    controle();
+    Serial.println("Condição atingida, ativando...");
+  }else{
+    digitalWrite(ledVermelho, HIGH);
+    digitalWrite(ledVerde, LOW);
+    Serial.println("Condição nao atingida");
+
+  }
 
 }
