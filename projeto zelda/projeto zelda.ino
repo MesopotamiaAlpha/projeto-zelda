@@ -3,7 +3,7 @@
  //  sudo chmod a+rw /dev/ttyACM0 erro o linux de permissão para upar os codigos no arduino
 const int pinoServo = 6; //PINO DIGITAL UTILIZADO PELO SERVO  
 const int echoPin = 7; //PINO DIGITAL UTILIZADO PELO SENSOR SONICO
-const int trigPin = 5;
+const int trigPin = 5; //PINO USADO PELO SENSOR SONICO
 const int ledVermelho = 3;
 const int ledVerde = 2;
 
@@ -16,7 +16,7 @@ String result; // TRANSFORMA EM STRING A DISTANCIA
 void setup (){
   s.attach(pinoServo); //ASSOCIAÇÃO DO PINO DIGITAL AO OBJETO DO TIPO SERVO
   s.write(0); //INICIA O MOTOR NA POSIÇÃO 0º
-  pinMode(echoPin, INPUT);
+  pinMode(echoPin, INPUT); //
   pinMode(trigPin, OUTPUT);
   Serial.begin(9600);
 }
@@ -55,7 +55,7 @@ void loop() {
   //Serial.print(result); //IMPRIME NO MONITOR SERIAL A DISTÂNCIA MEDIDA
   //Serial.println("cm"); //IMPRIME O TEXTO NO MONITOR SERIAL
   Serial.println(distancia);
- 
+
   if (distancia == 5){
     digitalWrite(ledVermelho, LOW);
     digitalWrite(ledVerde, HIGH);
