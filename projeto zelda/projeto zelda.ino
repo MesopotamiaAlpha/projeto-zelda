@@ -1,8 +1,8 @@
-#include <Servo.h> //INCLUSÃO DA BIBLIOTECA NECESSÁRIA
-#include <Ultrasonic.h>
- //  sudo chmod a+rw /dev/ttyACM0 erro o linux 
+#include <Servo.h> //INCLUSÃO DA BIBLIOTECA DO SERVO MOTOR
+#include <Ultrasonic.h> //INCLUSÃO DA BIBLIOTECA PARA O SENSOR SONICO
+ //  sudo chmod a+rw /dev/ttyACM0 erro o linux de permissão para upar os codigos no arduino
 const int pinoServo = 6; //PINO DIGITAL UTILIZADO PELO SERVO  
-const int echoPin = 7;
+const int echoPin = 7; //PINO DIGITAL UTILIZADO PELO SENSOR SONICO
 const int trigPin = 5;
 const int ledVermelho = 3;
 const int ledVerde = 2;
@@ -10,8 +10,8 @@ const int ledVerde = 2;
 Ultrasonic ultrasonic(trigPin, echoPin);
 Servo s; //OBJETO DO TIPO SERVO
 int pos; //POSIÇÃO DO SERVO
-int distancia;
-String result;
+int distancia; //REGISTRO DA DISTANCIA
+String result; // TRANSFORMA EM STRING A DISTANCIA
 
 void setup (){
   s.attach(pinoServo); //ASSOCIAÇÃO DO PINO DIGITAL AO OBJETO DO TIPO SERVO
